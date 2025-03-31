@@ -1,0 +1,111 @@
+[user]
+	name = yourname
+	email = youremail@gmail.com\n
+[credential]
+	helper = cache
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+#[http]
+	#postBuffer = 524288000 # vagrantで大きめのプロジェクトをcloneできないとき追加
+[color]
+  # colorの設定(以下のコマンドは自動で色つける)
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+  grep = auto
+[color "branch"]
+  upstream = cyan
+[push]
+  default = simple       # 現在いるブランチのみpushする
+[pull]
+  rebase = true
+[core]
+  excludesfile = ~/.gitignore  # globalな.gitignoreの指定
+  autocrlf = input                 # CRLFを自動変換
+	editor = vim
+  #pager = less -cm
+  quotepath = false
+[ghq]
+  root = ~/.ghq
+[alias]
+  st = status
+  sh = show
+  so = remote show origin
+  ft = fetch
+  up = pull --rebase       # pull rebase
+  rbm = rebase master      # masterへのrebaseはよく使うのでalias
+  ad = add
+  ci = commit -a           # modifiedなファイルを全てstageへ
+  cam = commit -a --amend  # 直前のcommitを修正
+  co = checkout
+  # branch関連
+  br = branch
+  ba = branch -a           # originも含めた全てのbranchを表示
+  bm = branch --merged     # merge済みのbranchを表示
+  bn = branch --no-merged  # mergeしてないbranchを表示
+  # log関連
+  wc = whatchanged         # logに変更されたファイルも一緒に出す
+  #ls = log --stat          # logに変更されたファイルも一緒に出す
+  lp = log -p              # diffも一緒に出す
+  lo = log --pretty=\"format:%ad %h (%an): %s\" --date=short  # ざっくりログ出す
+  lr = log origin          # originのlog
+  oneline = log --pretty=oneline
+  ranking = shortlog -s -n --no-merges
+  # logをtree表示
+  # log-graph
+  #lg = log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn %Creset%s'
+  # log-all
+  la = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'
+  # diff関連
+  dm = diff master           # masterとのdiff
+  dw = diff --color-words    # 単語単位でいろつけてdiff
+  dc = diff --cached         # addされているものとのdiff
+  ds = diff --staged         # 同上(1.6.1移行)
+  d1 = diff HEAD~            # HEADから1つ前とdiff
+  d2 = diff HEAD~~           # HEADから2つ前とdiff
+  d3 = diff HEAD~~~          # HEADから3つ前とdiff
+  d4 = diff HEAD~~~~         # HEADから4つ前とdiff
+  d5 = diff HEAD~~~~~        # HEADから5つ前とdiff
+  d10 = diff HEAD~~~~~~~~~~  # HEADから10前とdiff
+  dfst = diff --stat --name-only  # commit間の変更ファイル一覧
+  # mergeの際にconflictが起きたファイルを編集
+  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  # mergeの際にconflictが起きたファイルをadd
+  add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  # grep関連
+  gr = grep
+  gn = grep -n
+
+  # コメントアウトしているものは、あらかじめ使っていたもので、上の方で定義されている
+  ls = ls-files -v
+  #st = status
+  cm = commit
+  #br = branch
+  #co = checkout
+  df = diff --color
+  dfw = diff --color --word-diff
+  #dc = diff --cached
+  l = log --oneline --stat
+  # lg gitがこわいのaliasを試すため、一時コメントアウト
+  #lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lga = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lgs = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --stat
+  fix = commit --amend -C HEAD
+
+  # gitがこわい
+  sta = status --short --branch
+  sd = show --pretty=format:'%C(yellow)%h %C(cyan)[%ci]%C(red)%d%Creset by %cn%n%s' --numstat
+  ld = log --pretty=format:'%C(yellow)%h %C(cyan)[%ci]%C(red)%d%Creset by %cn%n%s' --numstat
+  ll = log --pretty=format:'%C(yellow)%h %cd%C(red)%d %Creset%s' --date=short
+  lg = log --pretty=format:'%C(yellow)%h %cd%C(red)%d %Creset%s' --date=short --graph
+	g = git
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
